@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import firebaseConfig  from './firebaseConfig';
+import * as firebaseui from "firebaseui";
+import Game from './game';
+import firebase from "firebase";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+class App extends Component {
+ 
+  componentDidMount() {
+   
+    const uiConfig = {
+      
+      signInSuccessUrl: './game' ,//"https://netflix-clone-ankur.herokuapp.com/", //This URL is used to return to that page when we got success response for phone authentication.
+      signInOptions: [firebase.auth.PhoneAuthProvider.PROVIDER_ID],
+      tosUrl: './game'
+    };
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start("#firebaseui-auth-container", uiConfig);
+    
+    
+    
+  }
+  render() {
+    
+    return (
+      <>
+      <h1>REACT PHONE AUTHENTICATION</h1>
+      <div id="firebaseui-auth-container"></div>
+      
+      
+      </>
+    )
+  }
 }
 
 export default App;
